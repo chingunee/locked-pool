@@ -2,7 +2,7 @@ require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 require("hardhat-abi-exporter");
 
-const { API_URL, PRIVATE_KEY, ETHERSCAN_API_KEY } = process.env;
+const { API_URL, PRIVATE_KEY, POLYGONSCAN_API_KEY } = process.env;
 
 module.exports = {
   solidity: {
@@ -15,7 +15,11 @@ module.exports = {
     },
   },
   networks: {
-    sepolia: {
+    polygon: {
+      url: API_URL,
+      accounts: [PRIVATE_KEY],
+    },
+    amoy: {
       url: API_URL,
       accounts: [PRIVATE_KEY],
     },
@@ -23,7 +27,7 @@ module.exports = {
   etherscan: {
     // Your API key for Etherscan
     // Obtain one at https://etherscan.io/
-    apiKey: ETHERSCAN_API_KEY,
+    apiKey: POLYGONSCAN_API_KEY,
   },
   abiExporter: {
     path: "./app/abi",
