@@ -19,7 +19,7 @@ module.exports = {
       url: API_URL,
       accounts: [PRIVATE_KEY],
     },
-    amoy: {
+    polygonAmoy: {
       url: API_URL,
       accounts: [PRIVATE_KEY],
     },
@@ -28,6 +28,20 @@ module.exports = {
     // Your API key for Etherscan
     // Obtain one at https://etherscan.io/
     apiKey: POLYGONSCAN_API_KEY,
+    customChains: [
+      {
+        network: "polygonAmoy",
+        chainId: 80002,
+        urls: {
+          apiURL:
+            "https://www.oklink.com/api/explorer/v1/contract/verify/async/c5800cdb-ad74-4e69-a093-32e0294e550d/polygonAmoy",
+          browserURL: "https://www.oklink.com/polygonAmoy",
+        },
+      },
+    ],
+  },
+  sourcify: {
+    enabled: true,
   },
   abiExporter: {
     path: "./app/abi",
