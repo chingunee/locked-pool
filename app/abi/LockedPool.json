@@ -7,11 +7,6 @@
         "type": "address"
       },
       {
-        "internalType": "address[]",
-        "name": "_tokensAllowed",
-        "type": "address[]"
-      },
-      {
         "internalType": "uint256",
         "name": "_unlockTimePoolOfMarket",
         "type": "uint256"
@@ -199,6 +194,19 @@
   {
     "inputs": [],
     "name": "acceptOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "_tokensAllowed",
+        "type": "address[]"
+      }
+    ],
+    "name": "addTokenAllowlist",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

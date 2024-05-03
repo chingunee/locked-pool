@@ -1,14 +1,17 @@
 async function main() {
-  const _signer = "0x900a7A576E37d1dc9B6B8D31BDdd78470052f8F7";
-  const _weth = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
-  const _tokensAllowed = ["0xeBB643800FF0bfCf4D4b3446B78654f924d1907F"];
-  const eigenFi = await ethers.deployContract("EigenFiPool", [
-    _signer,
-    _tokensAllowed,
-    _weth,
+  const _owner = "0x863715bc289526306BAa26569b31714c0e5F9397";
+  const _unlockTimePoolOfMarket = 1780243200;
+  const _unlockTimePoolOfEmployments = 1748707200;
+
+  const _tokensAllowed = ["0x66cf95ABEd306E620680d57BF5aD234409C4B3C5"];
+
+  const lockedPool = await ethers.deployContract("LockedPool", [
+    _owner,
+    _unlockTimePoolOfMarket,
+    _unlockTimePoolOfEmployments,
   ]);
-  const eigenFiAddress = await eigenFi.getAddress();
-  console.log("EigenFi Contract Address: ", eigenFiAddress);
+  const lockedPoolAddress = await lockedPool.getAddress();
+  console.log("LockedPool Contract Address: ", lockedPoolAddress);
 }
 
 main()
