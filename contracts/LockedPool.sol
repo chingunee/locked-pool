@@ -22,15 +22,23 @@ contract LockedPool is ILockedPool, Pausable, Ownable2Step{
     // (tokenAddress => stakerAddress => stakedAmount)
     mapping(address => mapping(address => uint256)) public balanceOfEmployments;
 
-    constructor(address _owner, address[] memory _tokensAllowed, uint256 _unlockTimePoolOfMarket, uint256 _unlockTimePoolOfEmployments) Ownable(_owner) {
+    constructor(address _owner, uint256 _unlockTimePoolOfMarket, uint256 _unlockTimePoolOfEmployments) Ownable(_owner) {
         require(
             block.timestamp < _unlockTimePoolOfMarket && block.timestamp < _unlockTimePoolOfEmployments,
             "Unlock time should be in the future"
         );
         unlockTimePoolOfMarket = _unlockTimePoolOfMarket;
         unlockTimePoolOfEmployments = _unlockTimePoolOfEmployments;
+        // uint256 length = _tokensAllowed.length;
+        // for(uint256 i; i < length; ++i){
+        //     if (_tokensAllowed[i] == address(0)) revert TokenCannotBeZeroAddress();
+        //     tokenAllowlist[_tokensAllowed[i]] = true;
+        // }
+    }
+
+    function addTokenAllowlist(address[] memory _tokensAllowed) onlyOwner public{
         uint256 length = _tokensAllowed.length;
-        for(uint256 i; i < length; ++i){
+                for(uint256 i; i < length; ++i){
             if (_tokensAllowed[i] == address(0)) revert TokenCannotBeZeroAddress();
             tokenAllowlist[_tokensAllowed[i]] = true;
         }
