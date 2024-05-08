@@ -19,7 +19,7 @@ A contract for locking balances of a designated ERC-20 token for a pre-defined a
 The contract is initialized with the following set of parameters:
 
 - `owner`: Address of the owner
-- `tokensAllowed`: Addresses of the token to lock
+- `tokenAddress`: Address of the token to lock
 - `unlockTimePoolOfMarket`: Lock of pool market duration in seconds, period starts after the deployment
 - `unlockTimePoolOfEmployments`: Lock of pool employments duration in seconds, period starts after the deposit deadline
 
