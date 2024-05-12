@@ -41,23 +41,25 @@ contract LockedPool is ILockedPool, Pausable, Ownable2Step, ReentrancyGuard {
     function depositForMarketPool(address _for, uint256 _amount) whenNotPaused external {
         if (_amount == 0) revert DepositAmountCannotBeZero();
         if (_for== address(0)) revert CannotDepositForZeroAddress();
+        require(block.timestamp < unlockTimePoolOfMarket, "Unlocked pool of market");
 
         address tokenAddress = address(token);
         balanceOfMarket[tokenAddress][_for] += _amount;
-        emit Deposit(_for, tokenAddress, _amount);
 
         token.safeTransferFrom(msg.sender, address(this), _amount);
+        emit Deposit(_for, tokenAddress, _amount);
     }
 
     function depositForEmploymentPool(address _for, uint256 _amount) whenNotPaused external {
         if (_amount == 0) revert DepositAmountCannotBeZero();
         if (_for== address(0)) revert CannotDepositForZeroAddress();
+        require(block.timestamp < unlockTimePoolOfEmployments, "Unlocked pool of employments");
         
         address tokenAddress = address(token);
         balanceOfEmployments[tokenAddress][_for] += _amount;
-        emit Deposit(_for, tokenAddress, _amount);
 
         token.safeTransferFrom(msg.sender, address(this), _amount);
+        emit Deposit(_for, tokenAddress, _amount);
     }
 
     function withdrawMarketPool(uint256 _amount) public nonReentrant whenNotPaused {
@@ -68,9 +70,8 @@ contract LockedPool is ILockedPool, Pausable, Ownable2Step, ReentrancyGuard {
         require(balanceOfMarket[tokenAddress][msg.sender] >= _amount, "Insufficient balance");
         
         balanceOfMarket[tokenAddress][msg.sender] -= _amount;
-        emit Withdraw(msg.sender, tokenAddress, _amount);
-
         token.safeTransfer(msg.sender, _amount);
+        emit Withdraw(msg.sender, tokenAddress, _amount);
     }
 
     function withdrawEmploymentPool(uint256 _amount) public nonReentrant whenNotPaused {
@@ -81,9 +82,9 @@ contract LockedPool is ILockedPool, Pausable, Ownable2Step, ReentrancyGuard {
         require(balanceOfEmployments[tokenAddress][msg.sender] >= _amount, "Insufficient balance");
 
         balanceOfEmployments[tokenAddress][msg.sender] -= _amount;
-        emit Withdraw(msg.sender, tokenAddress, _amount);
 
         token.safeTransfer(msg.sender, _amount);
+        emit Withdraw(msg.sender, tokenAddress, _amount);
     }
 
     /**
