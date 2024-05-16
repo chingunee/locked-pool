@@ -41,8 +41,8 @@ contract LockedPool is ILockedPool, Pausable, Ownable2Step, ReentrancyGuard {
     function depositForMarketPool(address _for, uint256 _amount) whenNotPaused external {
         if (_amount == 0) revert DepositAmountCannotBeZero();
         if (_for== address(0)) revert CannotDepositForZeroAddress();
-        require(block.timestamp < unlockTimePoolOfMarket, "Unlocked pool of market");
-
+        require(block.timestamp < unlockTimePoolOfMarket, "Deposit function is unavailable: pool of employments unlocked.");
+    
         address tokenAddress = address(token);
         balanceOfMarket[tokenAddress][_for] += _amount;
 
@@ -53,7 +53,7 @@ contract LockedPool is ILockedPool, Pausable, Ownable2Step, ReentrancyGuard {
     function depositForEmploymentPool(address _for, uint256 _amount) whenNotPaused external {
         if (_amount == 0) revert DepositAmountCannotBeZero();
         if (_for== address(0)) revert CannotDepositForZeroAddress();
-        require(block.timestamp < unlockTimePoolOfEmployments, "Unlocked pool of employments");
+        require(block.timestamp < unlockTimePoolOfEmployments, "Deposit function is unavailable: pool of employments unlocked.");
         
         address tokenAddress = address(token);
         balanceOfEmployments[tokenAddress][_for] += _amount;
@@ -64,7 +64,7 @@ contract LockedPool is ILockedPool, Pausable, Ownable2Step, ReentrancyGuard {
 
     function withdrawMarketPool(uint256 _amount) public nonReentrant whenNotPaused {
         require(_amount > 0, "WithdrawAmountCannotBeZero");
-        require(block.timestamp >= unlockTimePoolOfMarket, "You can't withdraw yet");
+        require(block.timestamp >= unlockTimePoolOfMarket, "Withdrawal unavailable: unlock time is June 1, 2026.");
         
         address tokenAddress = address(token);
         require(balanceOfMarket[tokenAddress][msg.sender] >= _amount, "Insufficient balance");
@@ -76,7 +76,7 @@ contract LockedPool is ILockedPool, Pausable, Ownable2Step, ReentrancyGuard {
 
     function withdrawEmploymentPool(uint256 _amount) public nonReentrant whenNotPaused {
         require(_amount > 0, "WithdrawAmountCannotBeZero");
-        require(block.timestamp >= unlockTimePoolOfEmployments, "You can't withdraw yet");
+        require(block.timestamp >= unlockTimePoolOfEmployments, "Withdrawal unavailable: unlock time is June 1, 2025");
 
         address tokenAddress = address(token);
         require(balanceOfEmployments[tokenAddress][msg.sender] >= _amount, "Insufficient balance");
