@@ -25,6 +25,20 @@ The contract is initialized with the following set of parameters:
 
 ---
 
+#### Getting Start
+
+1. git clone https://github.com/chingunee/locked-pool.git
+
+2. npm install
+
+3. create a .env file, and copy and paste .env.template
+
+4. npx hardhat compile
+
+5. npx hardhat run scripts/deploy.js --network polygon
+
+6. npx hardhat verify --network polygon contract-address 'param1' 'param2' 'param3' 'param4'
+
 ## License
 
 Created under the [MIT license](LICENSE).
